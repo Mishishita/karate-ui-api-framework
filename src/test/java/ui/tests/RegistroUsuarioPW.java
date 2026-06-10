@@ -4,6 +4,8 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+
+import ui.data.RegisterUserData;
 import ui.pages.RegisterPage;
 
 import utils.LogUtil;
@@ -27,28 +29,28 @@ public class RegistroUsuarioPW {
             registerPage.openRegistrationForm();
             LogUtil.info("Click en Register");
 
-            registerPage.enterFirstName("Maria");
-            registerPage.enterLastName("Tinoco");
-            registerPage.enterStreet("Lima");
-            registerPage.enterCity("Ate");
+            RegisterUserData userData = new RegisterUserData();
+            userData.setFirstName("Maria");
+            userData.setLastName("Tinoco");
+            userData.setStreet("Lima");
+            userData.setCity("ATE");
 
-            registerPage.enterState("PE");
-            registerPage.enterZipCode("054");
-            registerPage.enterPhoneNumber("123456789");
-            registerPage.enterSSn("123456");
+            userData.setState("PE");
+            userData.setZipCode("054");
+            userData.setPhoneNumber("123456789");
+            userData.setSsn("123456");
 
-            long timestamp = System.currentTimeMillis();
-            String username = "test" + timestamp;
+            userData.setUsername("test" + System.currentTimeMillis());
+            userData.setPassword("test123");
+            userData.setRepeatedPassword("test123");
 
-            registerPage.enterUsername(username);
-            registerPage.enterPassword("test123");
-            registerPage.enterRepeatedPassword("test123");
+            registerPage.registerUser(userData);
 
             LogUtil.info("Datos ingresados");
             registerPage.clickRegister();
             LogUtil.info("Registro exitoso");
 
-            if (!registerPage.isUserRegistered(username)) {
+            if (!registerPage.isUserRegistered(userData.getUsername())) {
                 throw new RuntimeException(
                         "Usuario no encontrado en pantalla");
             }
@@ -56,10 +58,9 @@ public class RegistroUsuarioPW {
             String welcomeMessage = registerPage.getWelcomeMessage();
             LogUtil.info("Mensaje: " + welcomeMessage);
 
-            LogUtil.info("Nombre: Maria");
-            LogUtil.info("Apellido: Tinoco");
-            LogUtil.info("Usuario generado: " + username);
-            LogUtil.info("Validación OK. Usuario encontrado: " + username);
+            LogUtil.info("Nombre: " + userData.getFirstName());
+            LogUtil.info("Apellido: " + userData.getLastName());
+            LogUtil.info("Usuario generado: " + userData.getUsername());
 
             page.waitForTimeout(5000);
 

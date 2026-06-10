@@ -2,6 +2,8 @@ package ui.pages;
 
 import com.microsoft.playwright.Page;
 
+import ui.data.RegisterUserData;
+
 public class RegisterPage {
 
     private final Page page;
@@ -81,5 +83,20 @@ public class RegisterPage {
     public String getWelcomeMessage(){
        return page.locator(".title").innerText();
        
+    }
+    public void registerUser(RegisterUserData userData){
+        
+        enterFirstName(userData.getFirstName());
+        enterLastName(userData.getLastName());
+        enterStreet(userData.getStreet());
+        enterCity(userData.getCity());
+        enterState(userData.getState());
+        enterZipCode(userData.getZipCode());
+        enterPhoneNumber(userData.getPhoneNumber());
+        enterSSn(userData.getSsn());
+        enterUsername(userData.getUsername());
+        enterPassword(userData.getPassword());
+        enterRepeatedPassword(userData.getRepeatedPassword());
+
     }
 }
