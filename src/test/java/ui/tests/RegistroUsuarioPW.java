@@ -6,6 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import ui.data.RegisterUserData;
+import ui.data.factory.RegisterUserDataFactory;
 import ui.pages.RegisterPage;
 
 import utils.LogUtil;
@@ -29,25 +30,11 @@ public class RegistroUsuarioPW {
             registerPage.openRegistrationForm();
             LogUtil.info("Click en Register");
 
-            RegisterUserData userData = new RegisterUserData();
-            userData.setFirstName("Maria");
-            userData.setLastName("Tinoco");
-            userData.setStreet("Lima");
-            userData.setCity("ATE");
-
-            userData.setState("PE");
-            userData.setZipCode("054");
-            userData.setPhoneNumber("123456789");
-            userData.setSsn("123456");
-
-            userData.setUsername("test" + System.currentTimeMillis());
-            userData.setPassword("test123");
-            userData.setRepeatedPassword("test123");
-
+            RegisterUserData userData = RegisterUserDataFactory.createDefaultUser();
             registerPage.registerUser(userData);
-
             LogUtil.info("Datos ingresados");
             registerPage.clickRegister();
+
             LogUtil.info("Registro exitoso");
 
             if (!registerPage.isUserRegistered(userData.getUsername())) {
