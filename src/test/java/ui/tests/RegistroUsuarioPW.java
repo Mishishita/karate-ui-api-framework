@@ -1,63 +1,51 @@
 package ui.tests;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-
+import ui.base.BaseTest;
 import ui.data.RegisterUserData;
 import ui.data.factory.RegisterUserDataFactory;
 import ui.pages.RegisterPage;
 
 import utils.LogUtil;
 
-public class RegistroUsuarioPW {
+public class RegistroUsuarioPW extends BaseTest {
 
     public static void main(String[] args) {
 
-        try (Playwright playwright = Playwright.create()) {
+        RegistroUsuarioPW test = new RegistroUsuarioPW();
+        test.setUp();
 
-            Browser browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setHeadless(false));
+        RegisterPage registerPage = new RegisterPage(test.page);
 
-            Page page = browser.newPage();
+        test.page.navigate("https://parabank.parasoft.com/parabank/index.htm");
+        LogUtil.info("Página abierta correctamente");
 
-            RegisterPage registerPage = new RegisterPage(page);
+        registerPage.openRegistrationForm();
+        LogUtil.info("Click en Register");
 
-            page.navigate("https://parabank.parasoft.com/parabank/index.htm");
-            LogUtil.info("Página abierta correctamente");
+        RegisterUserData userData = RegisterUserDataFactory.createDefaultUser();
+        registerPage.registerUser(userData);
+        LogUtil.info("Datos ingresados");
+        registerPage.clickRegister();
 
-            registerPage.openRegistrationForm();
-            LogUtil.info("Click en Register");
+        LogUtil.info("Registro exitoso");
 
-            RegisterUserData userData = RegisterUserDataFactory.createDefaultUser();
-            registerPage.registerUser(userData);
-            LogUtil.info("Datos ingresados");
-            registerPage.clickRegister();
-
-            LogUtil.info("Registro exitoso");
-
-            if (!registerPage.isUserRegistered(userData.getUsername())) {
-                throw new RuntimeException(
-                        "Usuario no encontrado en pantalla");
-            }
-
-            String welcomeMessage = registerPage.getWelcomeMessage();
-            LogUtil.info("Mensaje: " + welcomeMessage);
-
-            LogUtil.info("Nombre: " + userData.getFirstName());
-            LogUtil.info("Apellido: " + userData.getLastName());
-            LogUtil.info("Usuario generado: " + userData.getUsername());
-
-            page.waitForTimeout(5000);
-
-            browser.close();
-            LogUtil.info("Navegador cerrado");
-
-        } catch (Exception e) {
-
-            LogUtil.info("Error: " + e.getMessage());
-            throw new RuntimeException(e);
+        if (!registerPage.isUserRegistered(userData.getUsername())) {
+            throw new RuntimeException(
+                    "Usuario no encontrado en pantalla");
         }
+
+        String welcomeMessage = registerPage.getWelcomeMessage();
+        LogUtil.info("Mensaje: " + welcomeMessage);
+
+        LogUtil.info("Nombre: " + userData.getFirstName());
+        LogUtil.info("Apellido: " + userData.getLastName());
+        LogUtil.info("Usuario generado: " + userData.getUsername());
+
+        test.page.waitForTimeout(5000);
+
+        test.tearDown();
+
+        LogUtil.info("Navegador cerrado");
+
     }
 }
