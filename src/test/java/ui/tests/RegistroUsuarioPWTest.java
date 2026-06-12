@@ -8,6 +8,7 @@ import ui.data.factory.RegisterUserDataFactory;
 import ui.pages.RegisterPage;
 
 import utils.LogUtil;
+import utils.TestDataExporter;
 
 public class RegistroUsuarioPWTest extends BaseTest {
 
@@ -34,6 +35,8 @@ public class RegistroUsuarioPWTest extends BaseTest {
             throw new RuntimeException(
                     "Usuario no encontrado en pantalla");
         }
+        TestDataExporter.exportUser(userData);
+        LogUtil.info("Credenciales exportadas correctamente");
 
         String welcomeMessage = registerPage.getWelcomeMessage();
         LogUtil.info("Mensaje: " + welcomeMessage);

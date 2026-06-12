@@ -1,12 +1,8 @@
-Feature: Login API
+Feature: Leer credenciales desde JSON
 
-Scenario: Login exitoso
-    Given url "https://reqres.in/api/login"
-    And request
-    """{"email": "eve.holt", 
-    "password": "cityslicka"}"""
-    When method POST
-    Then status 200
-    And match response.token != null
+Scenario: Leer credenciales
 
-    * print response
+* def user = read('file:target/testdata/user.json')
+
+* print user.username
+* print user.password
