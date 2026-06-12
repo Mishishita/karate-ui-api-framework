@@ -1,5 +1,7 @@
 package ui.tests;
 
+import org.junit.jupiter.api.Test;
+
 import ui.base.BaseTest;
 import ui.data.RegisterUserData;
 import ui.data.factory.RegisterUserDataFactory;
@@ -7,16 +9,15 @@ import ui.pages.RegisterPage;
 
 import utils.LogUtil;
 
-public class RegistroUsuarioPW extends BaseTest {
+public class RegistroUsuarioPWTest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void shouldRegisterUser() {
 
-        RegistroUsuarioPW test = new RegistroUsuarioPW();
-        test.setUp();
 
-        RegisterPage registerPage = new RegisterPage(test.page);
+        RegisterPage registerPage = new RegisterPage(page);
 
-        test.page.navigate("https://parabank.parasoft.com/parabank/index.htm");
+        page.navigate("https://parabank.parasoft.com/parabank/index.htm");
         LogUtil.info("Página abierta correctamente");
 
         registerPage.openRegistrationForm();
@@ -41,11 +42,9 @@ public class RegistroUsuarioPW extends BaseTest {
         LogUtil.info("Apellido: " + userData.getLastName());
         LogUtil.info("Usuario generado: " + userData.getUsername());
 
-        test.page.waitForTimeout(5000);
+        page.waitForTimeout(5000);
 
-        test.tearDown();
-
-        LogUtil.info("Navegador cerrado");
+        
 
     }
 }

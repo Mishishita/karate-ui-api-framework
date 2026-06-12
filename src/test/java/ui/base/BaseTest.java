@@ -1,9 +1,14 @@
 package ui.base;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+
+import utils.LogUtil;
 
 public class BaseTest {
 
@@ -12,6 +17,7 @@ public class BaseTest {
     protected Page page;
 
     // Preparar la prueba
+    @BeforeEach
     protected void setUp() {
 
         playwright = Playwright.create();
@@ -24,13 +30,16 @@ public class BaseTest {
     }
 
     // Desmontar el escenario
+    @AfterEach
     protected void tearDown() {
         if (browser != null) {
             browser.close();
         }
         if (playwright != null) {
             playwright.close();
+            
         }
+        LogUtil.info("Navegador cerrado");
     }
 
 }
