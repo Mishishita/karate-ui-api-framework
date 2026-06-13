@@ -1,6 +1,6 @@
 package ui.data.factory;
 
-import ui.data.RegisterUserData;
+import ui.data.UserData;
 
 public class RegisterUserDataFactory {
 
@@ -8,9 +8,9 @@ public class RegisterUserDataFactory {
 
     }
 
-    public static RegisterUserData createDefaultUser() {
+    public static UserData createDefaultUser() {
 
-        RegisterUserData userData = new RegisterUserData();
+        UserData userData = new UserData();
 
         userData.setFirstName("Maria");
         userData.setLastName("Tinoco");

@@ -3,7 +3,7 @@ package ui.tests;
 import org.junit.jupiter.api.Test;
 
 import ui.base.BaseTest;
-import ui.data.RegisterUserData;
+import ui.data.UserData;
 import ui.data.factory.RegisterUserDataFactory;
 import ui.pages.RegisterPage;
 
@@ -24,7 +24,7 @@ public class RegistroUsuarioPWTest extends BaseTest {
         registerPage.openRegistrationForm();
         LogUtil.info("Click en Register");
 
-        RegisterUserData userData = RegisterUserDataFactory.createDefaultUser();
+        UserData userData = RegisterUserDataFactory.createDefaultUser();
         registerPage.registerUser(userData);
         LogUtil.info("Datos ingresados");
         registerPage.clickRegister();

@@ -2,7 +2,7 @@ package ui.pages;
 
 import com.microsoft.playwright.Page;
 
-import ui.data.RegisterUserData;
+import ui.data.UserData;
 
 public class RegisterPage {
 
@@ -84,7 +84,7 @@ public class RegisterPage {
        return page.locator(".title").innerText();
        
     }
-    public void registerUser(RegisterUserData userData){
+    public void registerUser(UserData userData){
         
         enterFirstName(userData.getFirstName());
         enterLastName(userData.getLastName());
