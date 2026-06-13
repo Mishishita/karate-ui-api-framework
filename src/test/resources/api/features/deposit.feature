@@ -2,16 +2,9 @@ Feature: Deposit API
 
 Scenario: Depositar dinero en una cuenta
 
-* def user = read('file:target/testdata/user.json')
-
 # Login
-Given url 'https://parabank.parasoft.com/parabank/services/bank'
-And path 'login', user.username, user.password
-When method get
-Then status 200
-
-* def customerId = response.customer.id
-* print 'CustomerId:', customerId
+* def loginData = call read('classpath:api/common/login.feature')
+* def customerId = loginData.customerId
 
 # Obtener cuentas
 Given url 'https://parabank.parasoft.com/parabank/services/bank'
