@@ -6,7 +6,7 @@ public class TestRunner {
 
     @Karate.Test
     Karate testAll() {
-        return Karate.run("classpath:api/features/create-account.feature");
-        //return Karate.run("classpath:features").relativeTo(getClass());
+        return Karate.run("classpath:api/features/end-to-end.feature").relativeTo(getClass());
+        // return Karate.run("classpath:features").relativeTo(getClass());
     }
 }

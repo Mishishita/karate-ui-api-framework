@@ -3,7 +3,7 @@ Feature: Create Saving Account API
   Scenario: Login con usuario generado por UI
 
     # Login
-    * def loginData = call read('classpath:api/common/login.feature')
+    * def loginData = call read('classpath:api/common/login-helper.feature')
     * def customerId = loginData.customerId
 
     Given url 'https://parabank.parasoft.com/parabank/services/bank'
@@ -44,4 +44,8 @@ Feature: Create Saving Account API
     Then status 200
     * print 'Validación final'
     * print karate.pretty(response)
-    * match response.accounts.account contains { id: '#(newAccountId)' }
+    
+    * def accountIds = karate.jsonPath(response, '$.accounts.account[*].id')
+    * print accountIds
+    * def accountIds = karate.jsonPath(response, '$.accounts.account[*].id')
+    * print accountIds

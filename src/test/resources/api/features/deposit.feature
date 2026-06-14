@@ -3,21 +3,24 @@ Feature: Deposit API
 Scenario: Depositar dinero en una cuenta
 
 # Login
-* def loginData = call read('classpath:api/common/login.feature')
+* def loginData = call read('classpath:api/common/login-helper.feature')
 * def customerId = loginData.customerId
 
-# Obtener cuentas
+# Leer datos guardados
+* def user = read('file:target/testdata/user.json')
+* def accountId = user.checkingAccountId
+* print 'AccountId:', accountId
+
+# Obtener saldo inicial
 Given url 'https://parabank.parasoft.com/parabank/services/bank'
-And path 'customers', customerId, 'accounts'
+And path 'accounts', accountId
 When method get
 Then status 200
 
-* def accountId = response.accounts.account.id
-* print 'AccountId:', accountId
 * print 'Saldo inicial'
 * print response
-* def initialBalance = response.accounts.account.balance
-* print 'InitialBalance: ',initialBalance
+* def initialBalance = parseFloat(response.account.balance)
+* print 'InitialBalance:', initialBalance
 
 # Depositar
 Given url 'https://parabank.parasoft.com/parabank/services/bank/deposit'
