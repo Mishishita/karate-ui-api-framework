@@ -1,53 +1,58 @@
 @regression
 Feature: Create Saving Account API
 
-  Scenario: Login con usuario generado por UI
+Scenario: Reutilizar o crear cuenta SAVINGS
 
-    # Login
-    #* def loginData = call read('classpath:api/common/login-helper.feature')
-    #* def customerId = loginData.customerId
+    # Recibimos el customerId desde login.feature
     * def customerId = __arg.customerId
 
+    # Consultar cuentas del cliente
     Given url 'https://parabank.parasoft.com/parabank/services/bank'
     And path 'customers', customerId, 'accounts'
-
     When method get
     Then status 200
-    * print karate.pretty(response)
-    * print 'El segundo responde'
-    * print response
-    * def accountId = response.accounts.account.id
-    * print 'accountId:',accountId
-    #* def secondAccountId = response.accounts.account[1].id
-    #* print 'secondAccountId:',secondAccountId
 
-    # 0 = CHECKING
-    # 1 = SAVINGS
-    Given url 'https://parabank.parasoft.com/parabank/services/bank'
-    And path 'createAccount'
-    And param customerId = customerId
-    And param newAccountType = 1
-    And param fromAccountId = accountId
+    * def accounts = response.accounts.account
 
-    When method post
-    * print 'Respuesta Create Account'
-    * print response
-    * def newAccountId = response.account.id
-    * print 'newAccountId:', newAccountId
+    # Si Parabank devuelve una sola cuenta, convertirla en lista
+    * if (accounts.id) accounts = [accounts]
+
+    # Obtener cuenta CHECKING
+    * def checkingAccounts = karate.filter(accounts, function(x){ return x.type == 'CHECKING' })
+    * def accountId = checkingAccounts[0].id
+
+    # Buscar cuenta SAVINGS
+    * def savingsAccounts = karate.filter(accounts, function(x){ return x.type == 'SAVINGS' })
+    * def savingsExists = savingsAccounts.length > 0
+
+    * print 'Checking accountId:', accountId
+    * print 'Savings exists:', savingsExists
+
     * def TestDataExporter = Java.type('utils.TestDataExporter')
-    * eval TestDataExporter.updateAccountData(customerId,accountId,newAccountId)
+    * def newAccountId = null
 
-    * match response.account.type == 'SAVINGS'
+    # Si existe una SAVINGS, reutilizarla
+    * if (savingsExists) newAccountId = savingsAccounts[0].id
 
-    #Validamos que la cuenta SAVINGS se haya creado correctamente
-    Given url 'https://parabank.parasoft.com/parabank/services/bank'
-    And path 'customers', customerId,'accounts'
-    When method get
-    Then status 200
-    * print 'Validación final'
-    * print karate.pretty(response)
-    
-    * def accountIds = karate.jsonPath(response, '$.accounts.account[*].id')
-    * print accountIds
-    * def accountIds = karate.jsonPath(response, '$.accounts.account[*].id')
-    * print accountIds
+    # Si no existe, crearla
+    * if (!savingsExists) createResult = karate.call('classpath:api/common/create-savings.feature', { customerId: customerId, accountId: accountId })
+
+    # Recuperar el id creado
+    * if (!savingsExists) newAccountId = createResult.newAccountId
+
+    # Actualizar user.json
+    * eval TestDataExporter.updateAccountData(customerId, accountId, newAccountId)
+
+    * print 'Checking Account:', accountId
+    * print 'Savings Account:', newAccountId
+
+    # Datos para el flujo E2E
+    # Devolver datos al feature que llama
+    * def result =
+    """
+    {
+      customerId: '#(customerId)',
+      accountId: '#(accountId)',
+      newAccountId: '#(newAccountId)'
+    }
+    """
