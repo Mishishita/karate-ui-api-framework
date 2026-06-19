@@ -1,3 +1,4 @@
+@regression
 Feature: Create Saving Account API
 
   Scenario: Login con usuario generado por UI

@@ -1,3 +1,4 @@
+@regression
 Feature: Deposit API
 
 Scenario: Depositar dinero en una cuenta

@@ -1,3 +1,4 @@
+@e2e
 Feature: End To End Banking Flow
 
 Scenario: Flujo completo

@@ -1,3 +1,4 @@
+@regression
 Feature: Transfer Funds API
 
   Scenario: Transferir dinero de CHEKING a SAVINGS
