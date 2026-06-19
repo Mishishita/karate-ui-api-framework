@@ -4,8 +4,9 @@ Feature: Create Saving Account API
   Scenario: Login con usuario generado por UI
 
     # Login
-    * def loginData = call read('classpath:api/common/login-helper.feature')
-    * def customerId = loginData.customerId
+    #* def loginData = call read('classpath:api/common/login-helper.feature')
+    #* def customerId = loginData.customerId
+    * def customerId = __arg.customerId
 
     Given url 'https://parabank.parasoft.com/parabank/services/bank'
     And path 'customers', customerId, 'accounts'

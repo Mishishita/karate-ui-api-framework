@@ -3,10 +3,6 @@ Feature: Deposit API
 
 Scenario: Depositar dinero en una cuenta
 
-# Login
-* def loginData = call read('classpath:api/common/login-helper.feature')
-* def customerId = loginData.customerId
-
 # Leer datos guardados
 * def user = read('file:target/testdata/user.json')
 * def accountId = user.checkingAccountId

@@ -13,3 +13,5 @@ Feature: Common Login
     * def customerId = response.customer.id
     * print 'customerId:',customerId
     * print 'Login reutilizable ejecutado'
+
+    #Actualmente no se usa este login pero lo dejaremos si más adelante se necesita.
