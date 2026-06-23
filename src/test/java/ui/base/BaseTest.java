@@ -12,6 +12,10 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import utils.LogUtil;
+import io.qameta.allure.Allure;
+
+import java.io.ByteArrayInputStream;
+
 
 @ExtendWith(ScreenshotOnFailureExtension.class)
 public class BaseTest {
@@ -74,4 +78,13 @@ public class BaseTest {
         LogUtil.info("Navegador cerrado");
     }
 
+
+    public void attachScreenshotToAllure(String name) {
+
+        byte[] screenshot = page.screenshot();
+
+        Allure.addAttachment(name,new ByteArrayInputStream(screenshot));
+
+        LogUtil.info("Screenshot adjuntado a Allure: "+ name);
+   }
 }

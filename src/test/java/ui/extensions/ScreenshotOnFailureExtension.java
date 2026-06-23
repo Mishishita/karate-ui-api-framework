@@ -19,9 +19,11 @@ public class ScreenshotOnFailureExtension
 
         if (testInstance instanceof BaseTest baseTest) {
 
-            baseTest.takeScreenshot(
-                    context.getRequiredTestMethod()
-                            .getName());
+            //baseTest.takeScreenshot(context.getRequiredTestMethod().getName());
+                String testName = context.getRequiredTestMethod().getName();
+
+                baseTest.takeScreenshot(testName);
+                baseTest.attachScreenshotToAllure(testName);
         }
 
         throw throwable;

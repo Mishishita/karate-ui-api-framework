@@ -10,12 +10,19 @@ import ui.base.BaseTest;
 import ui.pages.ServicesPage;
 import utils.LogUtil;
 import java.nio.file.Paths;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
-
+@Epic("Parabank")
+@Feature("Navegación")
 public class ServicesPagePWTest  extends BaseTest{
 
     @Tag("ui")
     @Tag("smoke")
+    @Story("Acceso a Services")
+    @Description("Valida la navegación hacia la página Services")
     @DisplayName("Navegación a página Services")
     @Test
     public void shouldOpenServicesPage(){

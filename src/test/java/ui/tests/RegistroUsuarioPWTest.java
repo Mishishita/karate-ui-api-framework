@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import ui.base.BaseTest;
 import ui.data.UserData;
 import ui.data.factory.RegisterUserDataFactory;
@@ -12,10 +15,17 @@ import utils.ConfigReader;
 import utils.LogUtil;
 import utils.TestDataExporter;
 
+import io.qameta.allure.Description;
+
+
+@Epic("Parabank")
+@Feature("Registro de Usuarios")
 public class RegistroUsuarioPWTest extends BaseTest {
 
     @Tag("ui")
     @Tag("smoke")
+    @Story("Alta de usuario")
+    @Description("Valida el registro exitoso de un nuevo usuario en Parabank")
     @DisplayName("Registro exitoso de usuario")
     @Test
     public void shouldRegisterUser() {
