@@ -26,8 +26,15 @@ public class ServicesPage {
     }
 
     public boolean isServicesPageDisplayed(){
+        
+        page.waitForSelector(
+            "text=Available Bookstore SOAP services:"
+        );
 
-        return page.locator("text=Available Bookstore SOAP services:").isVisible();
+        return page.locator(
+            "text=Available Bookstore SOAP services:"
+        ).isVisible();
+
     }
 
     public String getCurrentUrl(){

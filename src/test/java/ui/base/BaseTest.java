@@ -3,6 +3,9 @@ package ui.base;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import ui.extensions.ScreenshotOnFailureExtension;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
@@ -10,6 +13,7 @@ import com.microsoft.playwright.Playwright;
 
 import utils.LogUtil;
 
+@ExtendWith(ScreenshotOnFailureExtension.class)
 public class BaseTest {
 
     protected Playwright playwright;
@@ -33,9 +37,33 @@ public class BaseTest {
 
     }
 
+    public void takeScreenshot(String testName) {
+
+        String timestamp =
+                java.time.LocalDateTime.now()
+                        .format(
+                                java.time.format.DateTimeFormatter
+                                        .ofPattern("yyyyMMdd_HHmmss"));
+
+        String fileName =
+                testName + "_" + timestamp;
+
+        page.screenshot(
+                new Page.ScreenshotOptions()
+                        .setPath(
+                                java.nio.file.Paths.get(
+                                        "target/screenshots/"
+                                                + fileName
+                                                + ".png")));
+
+        LogUtil.info(
+                "Screenshot guardado: "
+                        + fileName);
+    }
+
     // Desmontar el escenario
     @AfterEach
-    protected void tearDown() {
+    public void tearDown() {
         if (browser != null) {
             browser.close();
         }

@@ -32,6 +32,7 @@ public class ServicesPagePWTest  extends BaseTest{
         LogUtil.info("URL correcta:" + servicesPage.getCurrentUrl());
 
         if (!servicesPage.isServicesPageDisplayed()){
+            
             throw new RuntimeException("NO se encontró el título de servicios");
         }
 
