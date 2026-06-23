@@ -1,5 +1,6 @@
 package ui.tests;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import ui.base.BaseTest;
@@ -12,6 +13,8 @@ import utils.TestDataExporter;
 
 public class RegistroUsuarioPWTest extends BaseTest {
 
+    @Tag("ui")
+    @Tag("smoke")
     @Test
     public void shouldRegisterUser() {
 
