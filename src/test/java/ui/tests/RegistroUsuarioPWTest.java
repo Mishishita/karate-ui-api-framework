@@ -7,7 +7,7 @@ import ui.base.BaseTest;
 import ui.data.UserData;
 import ui.data.factory.RegisterUserDataFactory;
 import ui.pages.RegisterPage;
-
+import utils.ConfigReader;
 import utils.LogUtil;
 import utils.TestDataExporter;
 
@@ -21,7 +21,7 @@ public class RegistroUsuarioPWTest extends BaseTest {
 
         RegisterPage registerPage = new RegisterPage(page);
 
-        page.navigate("https://parabank.parasoft.com/parabank/index.htm");
+        page.navigate(ConfigReader.getBaseUrl());
         LogUtil.info("Página abierta correctamente");
 
         registerPage.openRegistrationForm();

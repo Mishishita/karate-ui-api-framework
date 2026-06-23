@@ -3,6 +3,8 @@ package ui.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import utils.ConfigReader;
+
 public class ServicesPage {
 
     private final Page page;
@@ -14,7 +16,7 @@ public class ServicesPage {
     
 
     public void openHomePage(){
-        page.navigate("https://parabank.parasoft.com/parabank/index.htm");
+        page.navigate(ConfigReader.getBaseUrl());
     }
 
     public void clickServices(){

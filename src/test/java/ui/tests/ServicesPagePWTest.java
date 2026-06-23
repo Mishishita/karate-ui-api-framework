@@ -1,7 +1,6 @@
 package ui.tests;
 
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import com.microsoft.playwright.Page;
